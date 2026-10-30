@@ -38,12 +38,14 @@ on:
 jobs:
   build-linux:
     name: Linux
-    if: inputs.target == 'all' || inputs.target == 'linux' || inputs.target == ''
+    # Fork: nur Windows wird automatisch gebaut
+    if: inputs.target == 'all' || inputs.target == 'linux'
     uses: ./.github/workflows/linux_cpn.yml
 
   build-macos:
     name: macOS
-    if: inputs.target == 'all' || inputs.target == 'macos' || inputs.target == ''
+    # Fork: nur Windows wird automatisch gebaut
+    if: inputs.target == 'all' || inputs.target == 'macos'
     uses: ./.github/workflows/macosx_cpn.yml
 
   build-win64:
