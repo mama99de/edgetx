@@ -7634,6 +7634,10 @@ Die Spalten für Höhe &quot;GAlt&quot; und für Geschwindigkeit &quot;GSpd&quot
 <context>
     <name>MainWindow</name>
     <message>
+        <source>Interface Style</source>
+        <translation>Oberfläche</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.cpp" line="129"/>
         <location filename="../mainwindow.cpp" line="359"/>
         <source>File loaded</source>
@@ -18192,6 +18196,25 @@ Cancel zum abbrechen der Joystickkalibrierung ohne speichern.</translation>
         <location filename="../simulation/joystickdialog.cpp" line="256"/>
         <source>Cannot open joystick.</source>
         <translation>kann Joystick nicht öffnen.</translation>
+    </message>
+</context>
+<context>
+    <name>UiTheme</name>
+    <message>
+        <source>Classic</source>
+        <translation>Klassisch</translation>
+    </message>
+    <message>
+        <source>Modern (follow system)</source>
+        <translation>Modern (wie System)</translation>
+    </message>
+    <message>
+        <source>Modern light</source>
+        <translation>Modern hell</translation>
+    </message>
+    <message>
+        <source>Modern dark</source>
+        <translation>Modern dunkel</translation>
     </message>
 </context>
 </TS>

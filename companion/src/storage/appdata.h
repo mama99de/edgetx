@@ -793,6 +793,7 @@ class AppData: public CompStoreObj
     PROPERTY4(int, historySize,           "history_size",             10)
     PROPERTY (int, generalEditTab,                                    0)
     PROPERTY (int, theme,                                             1)
+    PROPERTY4(int, uiStyle,               "ui_style",                 1)  // UiTheme::Style
     PROPERTY (int, warningId,                                         0)
 
     PROPERTY4(bool, jsSupport,            "js_support",               false)

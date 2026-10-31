@@ -145,6 +145,7 @@ set(common_SRCS
   customdebug.cpp
   helpers.cpp
   translations.cpp
+  uitheme.cpp
   modeledit/node.cpp  # used in simulator
   modeledit/edge.cpp  # used by node
   )

@@ -78,7 +78,8 @@ RawSourceRange RawSource::getRange(const ModelData * model, const GeneralSetting
   switch (type) {
     case SOURCE_TYPE_TELEMETRY:
       {
-        div_t qr = div(index, 3);
+        // index is 1-based: sensor * 3 + (0 = value, 1 = min, 2 = max) + 1
+        div_t qr = div(index - 1, 3);
         const SensorData & sensor = model->sensorData[qr.quot];
         if (sensor.prec == 2)
           result.step = 0.01;

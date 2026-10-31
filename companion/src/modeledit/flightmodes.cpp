@@ -206,6 +206,19 @@ void FlightModePanel::phaseFadeOut_editingFinished()
   emit modified();
 }
 
+// Show the trim as the radio does (-100 % .. +100 % of the trim range) next to the raw value,
+// so values copied from the radio (Value / PlayValue) are not mistaken for raw steps (#7774)
+static void updateTrimPercentSuffix(QSpinBox * sb)
+{
+  const int max = sb->maximum();
+  if (max <= 0) {
+    sb->setSuffix("");
+    return;
+  }
+  const int pct = qRound(sb->value() * 100.0 / max);
+  sb->setSuffix(QString("  (%1%2 %)").arg(pct > 0 ? "+" : "").arg(pct));
+}
+
 void FlightModePanel::trimUpdate(unsigned int trim)
 {
   lock = true;
@@ -213,6 +226,7 @@ void FlightModePanel::trimUpdate(unsigned int trim)
   int value = model->getTrimValue(phaseIdx, chn);
   trimsSlider[trim]->setValue(value);
   trimsValue[trim]->setValue(value);
+  updateTrimPercentSuffix(trimsValue[trim]);
 
   if (phase.trimMode[chn] < 0) {
     trimsUse[trim]->setCurrentIndex(0);
@@ -276,6 +290,7 @@ void FlightModePanel::phaseTrim_valueChanged()
     lock = true;
     trimsSlider[trim]->setValue(value);
     lock = false;
+    updateTrimPercentSuffix(spinBox);
     emit modified();
   }
 }
@@ -291,6 +306,7 @@ void FlightModePanel::phaseTrimSlider_valueChanged()
     lock = true;
     trimsValue[trim]->setValue(value);
     lock = false;
+    updateTrimPercentSuffix(trimsValue[trim]);
     emit modified();
   }
 }

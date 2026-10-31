@@ -34,6 +34,7 @@
 
 #include <AppDebugMessageHandler>
 
+#include "uitheme.h"
 #include "appdata.h"
 #include "constants.h"
 #include "customdebug.h"
@@ -268,6 +269,9 @@ int main(int argc, char *argv[])
   CustomDebug::setFilterRules();
 
   g.init();  // init settings before installing translations
+
+  UiTheme::init(&app);
+  UiTheme::apply(g.uiStyle());
 
   if (AppDebugMessageHandler::instance() && g.appDebugLog() && !g.appLogsDir().isEmpty() && QDir().mkpath(g.appLogsDir())) {
     QString fn = g.appLogsDir() % "/SimulatorDebug_" % QDateTime::currentDateTime().toString("yy-MM-dd_HH-mm-ss") % ".log";

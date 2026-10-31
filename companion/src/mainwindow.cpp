@@ -19,6 +19,8 @@
  * GNU General Public License for more details.
  */
 
+#include "uitheme.h"
+#include <QStyleHints>
 #include "mainwindow.h"
 #include "mdichild.h"
 #include "comparedialog.h"
@@ -310,6 +312,16 @@ void  MainWindow::setIconThemeSize(int index)
       break;
   }
   this->setIconSize(size);
+}
+
+void MainWindow::onUiStyleChanged(QAction * act)
+{
+  bool ok;
+  int id = act->property("uiStyleId").toInt(&ok);
+  if (ok && id >= 0 && id < UiTheme::STYLE_COUNT) {
+    g.uiStyle(id);
+    UiTheme::apply(id);
+  }
 }
 
 void MainWindow::onIconSizeChanged(QAction * act)
@@ -863,6 +875,7 @@ void MainWindow::retranslateUi(bool showMsg)
   settingsMenu->setTitle(tr("Settings"));
   themeMenu->setTitle(tr("Set Icon Theme"));
   iconThemeSizeMenu->setTitle(tr("Set Icon Size"));
+  uiStyleMenu->setTitle(tr("Interface Style"));
   radioMenu->setTitle(tr("Radio"));
   toolsMenu->setTitle(tr("Tools"));
   windowMenu->setTitle(tr("Window"));
@@ -990,6 +1003,20 @@ void MainWindow::createMenus()
   addActToGroup(szGroup, tr("Huge"),   tr("Use huge toolbar icons"),        "sizeId", 3, g.iconSize());
   connect(szGroup, &QActionGroup::triggered, this, &MainWindow::onIconSizeChanged);
   iconThemeSizeMenu->addActions(szGroup->actions());
+
+  uiStyleMenu = viewMenu->addMenu("");
+  QActionGroup * styleGroup = new QActionGroup(uiStyleMenu);
+  for (int i = 0; i < UiTheme::STYLE_COUNT; i++) {
+    addActToGroup(styleGroup, UiTheme::styleName(i), UiTheme::styleName(i), "uiStyleId", i, g.uiStyle());
+  }
+  connect(styleGroup, &QActionGroup::triggered, this, &MainWindow::onUiStyleChanged);
+  uiStyleMenu->addActions(styleGroup->actions());
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+  connect(QGuiApplication::styleHints(), &QStyleHints::colorSchemeChanged, this, [](Qt::ColorScheme) {
+    if (g.uiStyle() == UiTheme::STYLE_MODERN_SYSTEM)
+      UiTheme::apply(UiTheme::STYLE_MODERN_SYSTEM);
+  });
+#endif
 
   radioMenu = menuBar()->addMenu("");
   radioMenu->addAction(writeSettingsAct);

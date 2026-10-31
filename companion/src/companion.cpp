@@ -33,6 +33,7 @@
 
 #include <AppDebugMessageHandler>
 
+#include "uitheme.h"
 #include "customdebug.h"
 #include "mainwindow.h"
 #include "version.h"
@@ -214,6 +215,9 @@ int main(int argc, char *argv[])
 #ifdef __APPLE__
   app.setStyle(new MyProxyStyle);
 #endif
+
+  UiTheme::init(&app);
+  UiTheme::apply(g.uiStyle());
 
   Translations::installTranslators();
 

@@ -418,10 +418,11 @@ struct YamlSwitchWarningState {
     std::stringstream ss(src_str);
     while (!ss.eof()) {
       auto c = ss.get();
-      if (c < 'A' && c > 'Z') {
-        ss.ignore();
+      if (c == std::char_traits<char>::eof())
+        break;
+      // skip anything that is not a switch letter (condition was always false before)
+      if (c < 'A' || c > 'Z')
         continue;
-      }
 
       std::string sw = std::string("S") + (char)c;
       int index = Boards::getSwitchIndex(sw.c_str(), Board::LVT_NAME);

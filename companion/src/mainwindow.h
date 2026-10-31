@@ -69,6 +69,7 @@ class MainWindow : public QMainWindow
     void onThemeChanged(QAction * act);
     void setIconThemeSize(int index);
     void onIconSizeChanged(QAction * act);
+    void onUiStyleChanged(QAction * act);
     void setTabbedWindows(bool on);
     void onChangeWindowAction(QAction * act);
     void updateWindowActions();
@@ -181,6 +182,7 @@ class MainWindow : public QMainWindow
 
     // sub menus
     QMenu *iconThemeSizeMenu;
+    QMenu *uiStyleMenu;
     QMenu *themeMenu;
     QMenu *recentFilesMenu;
     QMenu *profilesMenu;
