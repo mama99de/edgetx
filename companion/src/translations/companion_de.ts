@@ -8072,7 +8072,7 @@ Do you wish to continue?</source>
     <message>
         <location filename="../mainwindow.cpp" line="861"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansicht</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="862"/>
@@ -13657,7 +13657,7 @@ Profile ID: [%1]; Radio ID: [%2]</source>
     <message>
         <location filename="../simulation/simulatormainwindow.ui" line="48"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansicht</translation>
     </message>
     <message>
         <location filename="../simulation/simulatormainwindow.ui" line="52"/>

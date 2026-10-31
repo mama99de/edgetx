@@ -30,6 +30,7 @@ class WizardDialog : public QWizard
 
   public:
     WizMix mix;
+    bool hasMotor = true;  // answer of the throttle page, used to show glider pictures
     WizardDialog(const GeneralSettings & settings, const unsigned int modelId, const ModelData & modelData, QWidget *parent = 0);
     const GeneralSettings & settings;
 
@@ -58,6 +59,7 @@ class StandardPage: public QWizardPage
 
   private:
     QLabel *topLabel;
+    QString imageName;
     WizardPage pageCurrent;
     int pageFollower;
     int nextId() const;

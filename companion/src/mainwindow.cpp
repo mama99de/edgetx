@@ -659,9 +659,9 @@ void MainWindow::about()
   aboutStr.append(tr("If you've found this program useful, please support by <a href='%1'>donating</a>").arg(EDGETX_DONATE_URL));
   aboutStr.append("<br/><br/>");
 #if defined(VERSION_TAG)
-  aboutStr.append(QString("Version %1 \"%2\", %3").arg(VERSION_TAG).arg(CODENAME).arg(__DATE__));
+  aboutStr.append(QString("Version %1 \"%2\", %3").arg(VERSION_TAG).arg(CODENAME).arg(__DATE__ " - " SPECIAL_BUILD));
 #else
-  aboutStr.append(QString("Version %1-%2, %3").arg(VERSION).arg(VERSION_SUFFIX).arg(__DATE__));
+  aboutStr.append(QString("Version %1-%2, %3").arg(VERSION).arg(VERSION_SUFFIX).arg(__DATE__ " - " SPECIAL_BUILD));
   aboutStr.append("<br/>");
   aboutStr.append(QString("Commit <a href='%1'>%2</a>").arg(EDGETX_COMMIT_URL % GIT_STR).arg(GIT_STR));
 #endif

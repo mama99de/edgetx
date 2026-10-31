@@ -19,6 +19,7 @@
  * GNU General Public License for more details.
  */
 
+#include <QFile>
 #include "wizarddialog.h"
 #include "helpers.h"
 #include "namevalidator.h"
@@ -165,6 +166,7 @@ StandardPage::StandardPage(WizardPage currentPage, WizardDialog *dlg, QString im
   pageFollower(nextPage)
 {
   setTitle(title);
+  imageName = image;
   setPixmap(QWizard::WatermarkPixmap, QPixmap(QString(":/images/wizard/%1.png").arg(image)));
   topLabel = new QLabel(text+"<br>");
   topLabel->setWordWrap(true);
@@ -262,6 +264,16 @@ void StandardPage::releasePreBookings()
 void StandardPage::initializePage()
 {
   releasePreBookings(); // All prebookings are void after page has initialized
+
+  // Planes without motor are gliders: show a glider instead of a powered plane
+  // on the pages that have a glider picture
+  QString image = QString(":/images/wizard/%1.png").arg(imageName);
+  if (!wizDlg->hasMotor && wizDlg->mix.vehicle == PLANE) {
+    const QString glider = QString(":/images/wizard/%1_glider.png").arg(imageName);
+    if (QFile::exists(glider))
+      image = glider;
+  }
+  setPixmap(QWizard::WatermarkPixmap, QPixmap(image));
 }
 
 void StandardPage::cleanupPage()
@@ -419,6 +431,7 @@ void ThrottlePage::initializePage()
 bool ThrottlePage::validatePage()
 {
   releaseBookings();
+  wizDlg->hasMotor = motorRB->isChecked();
   if (motorRB->isChecked())
     return bookChannel(throttleCB, THROTTLE_INPUT, 100);
   else

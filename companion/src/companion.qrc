@@ -71,6 +71,9 @@
     <file>images/wizard/throttle.png</file>
     <file>images/wizard/vtail.png</file>
     <file>images/wizard/wingtype.png</file>
+    <file>images/wizard/wingtype_glider.png</file>
+    <file>images/wizard/ailerons_glider.png</file>
+    <file>images/wizard/flaps_glider.png</file>
     <file>images/library/00013.png</file>
     <file>images/library/00014.png</file>
     <file>images/library/00015.png</file>
