@@ -85,6 +85,7 @@ class MdiChild : public QWidget
       ACT_MDL_WIZ,
       ACT_MDL_DFT,  // set as DeFaulT
       ACT_MDL_PRT,  // print
+      ACT_MDL_PDF,  // save model as PDF
       ACT_MDL_SIM,
       ACT_MDL_ERR,
       ACT_LBL_ADD,  // label actions..
@@ -118,6 +119,7 @@ class MdiChild : public QWidget
     void closeFile(bool force = false);
     void writeSettings(StatusDialog * status, bool toRadio = true);
     void print(int model=-1, const QString & filename="");
+    void saveModelPdf();
     void onFirmwareChanged();
 
   signals:

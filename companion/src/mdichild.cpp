@@ -37,6 +37,8 @@
 
 #include <algorithm>
 #include <ExportableTableView>
+#include <QDesktopServices>
+#include <QRegularExpression>
 
 
 void StatusBarIcon::mouseDoubleClickEvent(QMouseEvent * event)
@@ -236,6 +238,7 @@ void MdiChild::setupNavigation()
 
   addAct(ACT_MDL_DFT, "currentmodel.png", SLOT(setDefault()),     tr("Alt+U"));
   addAct(ACT_MDL_PRT, "print.png",        SLOT(print()),          QKeySequence::Print);
+  addAct(ACT_MDL_PDF, "print.png",        SLOT(saveModelPdf()));
   addAct(ACT_MDL_SIM, "simulate.png",     SLOT(modelSimulate()),  tr("Alt+S"));
   addAct(ACT_MDL_DUP, "duplicate.png",    SLOT(modelDuplicate()), QKeySequence::Underline);
 
@@ -386,6 +389,7 @@ void MdiChild::updateNavigation()
   action[ACT_MDL_WIZ]->setEnabled(singleModelSelected);
   action[ACT_MDL_DFT]->setEnabled(singleModelSelected && getCurrentModel() != (int)radioData.generalSettings.currModelIndex);
   action[ACT_MDL_PRT]->setEnabled(singleModelSelected);
+  action[ACT_MDL_PDF]->setEnabled(singleModelSelected);
   action[ACT_MDL_SIM]->setEnabled(singleModelSelected);
   action[ACT_MDL_ERR]->setEnabled(singleModelSelected && radioData.models[getCurrentModel()].modelErrors);
 
@@ -419,6 +423,7 @@ void MdiChild::retranslateUi()
   action[ACT_MDL_WIZ]->setText(tr("Model Wizard"));
   action[ACT_MDL_DFT]->setText(tr("Set as Default"));
   action[ACT_MDL_PRT]->setText(tr("Print Model"));
+  action[ACT_MDL_PDF]->setText(tr("Save Model as PDF..."));
   action[ACT_MDL_SIM]->setText(tr("Simulate Model"));
   action[ACT_MDL_DUP]->setText(tr("Duplicate Model"));
   action[ACT_MDL_ERR]->setText(tr("Show Model Errors"));
@@ -467,6 +472,7 @@ QList<QAction *> MdiChild::getModelActions()
   // can just open another etx so use case doubtful
   //actGrp.append(getAction(ACT_MDL_RTR));
   actGrp.append(getAction(ACT_MDL_PRT));
+  actGrp.append(getAction(ACT_MDL_PDF));
   actGrp.append(getAction(ACT_MDL_SIM));
   actGrp.append(getAction(ACT_MDL_ERR));
   return actGrp;
@@ -1282,6 +1288,44 @@ void MdiChild::print(int model, const QString & filename)
   if (pd) {
     pd->setAttribute(Qt::WA_DeleteOnClose, true);
     pd->show();
+  }
+}
+
+void MdiChild::saveModelPdf()
+{
+  const int row = getCurrentModel();
+  if (row < 0 || row >= (int)radioData.models.size() || radioData.models[row].isEmpty())
+    return;
+
+  ModelData & model = radioData.models[row];
+
+  // suggest "<model name>.pdf" next to the models file (or in the last used folder)
+  QString name = QString(model.name).trimmed();
+  if (name.isEmpty())
+    name = tr("Model %1").arg(row + 1);
+  name.replace(QRegularExpression("[\\\\/:*?\"<>|]"), "_");
+  QString dir = curFile.isEmpty() ? g.eepromDir() : QFileInfo(curFile).absolutePath();
+
+  QString fn = QFileDialog::getSaveFileName(this, tr("Save Model as PDF"), QDir(dir).filePath(name + ".pdf"),
+                                            tr("PDF files (*.pdf)"));
+  if (fn.isEmpty())
+    return;
+  if (!fn.endsWith(".pdf", Qt::CaseInsensitive))
+    fn += ".pdf";
+
+  QApplication::setOverrideCursor(Qt::WaitCursor);
+  const QString error = PrintDialog::saveModelPdf(firmware, radioData.generalSettings, model, fn, curFile);
+  QApplication::restoreOverrideCursor();
+
+  if (!error.isEmpty()) {
+    QMessageBox::warning(this, CPN_STR_APP_NAME, error);
+    return;
+  }
+
+  if (QMessageBox::question(this, CPN_STR_APP_NAME,
+                            tr("The PDF has been saved:\n%1\n\nOpen it now?").arg(QDir::toNativeSeparators(fn)),
+                            QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes) {
+    QDesktopServices::openUrl(QUrl::fromLocalFile(fn));
   }
 }
 

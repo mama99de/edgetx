@@ -8483,6 +8483,32 @@ Do you wish to continue?</source>
 <context>
     <name>MdiChild</name>
     <message>
+        <source>Save Model as PDF...</source>
+        <translation>Modell als PDF speichern...</translation>
+    </message>
+    <message>
+        <source>Save Model as PDF</source>
+        <translation>Modell als PDF speichern</translation>
+    </message>
+    <message>
+        <source>PDF files (*.pdf)</source>
+        <translation>PDF-Dateien (*.pdf)</translation>
+    </message>
+    <message>
+        <source>Model %1</source>
+        <translation>Modell %1</translation>
+    </message>
+    <message>
+        <source>The PDF has been saved:
+%1
+
+Open it now?</source>
+        <translation>Die PDF wurde gespeichert:
+%1
+
+Jetzt öffnen?</translation>
+    </message>
+    <message>
         <location filename="../mdichild.cpp" line="1260"/>
         <source>Editing model %1: </source>
         <translation>Modell %1 bearbeiten:</translation>
@@ -11712,6 +11738,42 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>PrintDialog</name>
+    <message>
+        <source>No file name given.</source>
+        <translation>Kein Dateiname angegeben.</translation>
+    </message>
+    <message>
+        <source>(no name)</source>
+        <translation>(ohne Namen)</translation>
+    </message>
+    <message>
+        <source>Model settings</source>
+        <translation>Modelleinstellungen</translation>
+    </message>
+    <message>
+        <source>Radio</source>
+        <translation>Sender</translation>
+    </message>
+    <message>
+        <source>Firmware</source>
+        <translation>Firmware</translation>
+    </message>
+    <message>
+        <source>Labels</source>
+        <translation>Labels</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Datei</translation>
+    </message>
+    <message>
+        <source>Created</source>
+        <translation>Erstellt</translation>
+    </message>
+    <message>
+        <source>The PDF file could not be written: %1</source>
+        <translation>Die PDF-Datei konnte nicht geschrieben werden: %1</translation>
+    </message>
     <message>
         <location filename="../print/printdialog.ui" line="54"/>
         <source>Close</source>

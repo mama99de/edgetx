@@ -39,6 +39,11 @@ class PrintDialog : public QDialog
     ~PrintDialog();
     void closeEvent(QCloseEvent * event);
 
+    // Write a clearly laid out PDF of all model specific settings, without showing a dialog.
+    // Returns an empty string on success, otherwise an error message.
+    static QString saveModelPdf(Firmware * firmware, GeneralSettings & generalSettings, ModelData & model,
+                                const QString & pdfFileName, const QString & sourceFileName = QString());
+
     Firmware * firmware;
     GeneralSettings & generalSettings;
     ModelData & model;
